@@ -5,7 +5,9 @@ public class NumeralConverter
 {
     String[] romanNumerals = new String[] {"I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M"}; // Roman numerals for later referencing
     int[] arabicNumerals = new int[] {1,4,5,9,10,40,50,90,100,400,500,900,1000}; // Arabic equivalents of the roman numerals array
-    RomanNumeralProcessor RomanProcessor = new RomanNumeralProcessor();
+    RomanNumeralProcessor romanNumeralProcessor = new RomanNumeralProcessor();
+    ArabicValidator arabicValidator = new ArabicValidator();
+    RomanValidator romanValidator = new RomanValidator();
     public String convert(String numeral)
     {
         int i;
@@ -13,7 +15,7 @@ public class NumeralConverter
         int division = 0; // For dividing numbers in arabic to roman conversion algorithm
 
         StringBuilder finalRomanNumeral = new StringBuilder();
-        String arabicValidation = RomanProcessor.validateArabic(numeral);
+        String arabicValidation = arabicValidator.validate(numeral);
 
         if(Objects.equals(arabicValidation, "ok"))
         {
@@ -39,10 +41,10 @@ public class NumeralConverter
 
         List<Integer> arabicEquivalents; // List of the arabic equivalent of each roman symbol in the user input numeral
 
-        if(RomanProcessor.validateRoman(numeral)) // If it's a valid roman numeral
+        if(romanValidator.validate(numeral)) // If it's a valid roman numeral
         {
-            arabicEquivalents = RomanProcessor.getArabicEquivalents(numeral);
-            int result = RomanProcessor.ArabicListToRoman(arabicEquivalents);
+            arabicEquivalents = romanNumeralProcessor.getArabicEquivalents(numeral);
+            int result = romanNumeralProcessor.ArabicListToRoman(arabicEquivalents);
             return(numeral + " represented in the arabic system: " + result);
         }
         return("Invalid number, please try again.");
