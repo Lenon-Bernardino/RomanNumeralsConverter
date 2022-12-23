@@ -10,12 +10,12 @@ public class RomanValidator
 
     }
 
-    public boolean validate(String numeral)
+    public boolean validate(String numeral) // Check the validity of a roman numeral input
     {
-        String pattern = "[M|D|C|L|X|V|I]*";
+        String pattern = "[M|D|C|L|X|V|I]*"; // A pattern for checking if it only contains valid roman symbols
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(numeral);
 
-        return m.matches();
+        return m.matches(); // Return the matches
     }
 }

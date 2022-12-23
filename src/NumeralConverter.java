@@ -5,19 +5,19 @@ public class NumeralConverter
 {
     String[] romanNumerals = new String[] {"I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M"}; // Roman numerals for later referencing
     int[] arabicNumerals = new int[] {1,4,5,9,10,40,50,90,100,400,500,900,1000}; // Arabic equivalents of the roman numerals array
-    RomanNumeralProcessor romanNumeralProcessor = new RomanNumeralProcessor();
-    ArabicValidator arabicValidator = new ArabicValidator();
-    RomanValidator romanValidator = new RomanValidator();
+    RomanNumeralProcessor romanNumeralProcessor = new RomanNumeralProcessor(); // Processing of roman numerals
+    ArabicValidator arabicValidator = new ArabicValidator(); // Check the validity of arabic numeral input
+    RomanValidator romanValidator = new RomanValidator(); // Check the validity of roman numeral input
     public String convert(String numeral)
     {
         int i;
         int number; // For input numeral converted to integer
         int division = 0; // For dividing numbers in arabic to roman conversion algorithm
 
-        StringBuilder finalRomanNumeral = new StringBuilder();
+        StringBuilder finalRomanNumeral = new StringBuilder(); // For building the final roman numeral
         String arabicValidation = arabicValidator.validate(numeral);
 
-        if(Objects.equals(arabicValidation, "ok"))
+        if(Objects.equals(arabicValidation, "ok")) // If it outputs ok, it means it's valid
         {
             number = Integer.parseInt(numeral);
             i = 12; // for iterating through the arabic numeral array
@@ -34,19 +34,19 @@ public class NumeralConverter
             }
             return(numeral + " represented in the roman system: " + finalRomanNumeral);
         }
-        else if(!Objects.equals(arabicValidation, "0"))
+        else if(!Objects.equals(arabicValidation, "0")) // If it outputs 0, do nothing
         {
-            return arabicValidation;
+            return arabicValidation; // If it's not 0 or ok, then it means it's not valid at all, return its error message
         }
 
         List<Integer> arabicEquivalents; // List of the arabic equivalent of each roman symbol in the user input numeral
 
         if(romanValidator.validate(numeral)) // If it's a valid roman numeral
         {
-            arabicEquivalents = romanNumeralProcessor.getArabicEquivalents(numeral);
-            int result = romanNumeralProcessor.ArabicListToRoman(arabicEquivalents);
-            return(numeral + " represented in the arabic system: " + result);
+            arabicEquivalents = romanNumeralProcessor.getArabicEquivalents(numeral); // Get arabic equivalent of each roman symbol into a list
+            int result = romanNumeralProcessor.ArabicListToRoman(arabicEquivalents); // Process the list into an arabic numeral
+            return(numeral + " represented in the arabic system: " + result); // Output it into the main function
         }
-        return("Invalid number, please try again.");
+        return("Invalid number, please try again."); // Nothing worked, it was a completely invalid input
     }
 }
