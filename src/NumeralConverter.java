@@ -14,25 +14,12 @@ public class NumeralConverter
         int number; // For input numeral converted to integer
         int division = 0; // For dividing numbers in arabic to roman conversion algorithm
 
-        StringBuilder finalRomanNumeral = new StringBuilder(); // For building the final roman numeral
         String arabicValidation = arabicValidator.validate(numeral);
 
         if(Objects.equals(arabicValidation, "ok")) // If it outputs ok, it means it's valid
         {
             number = Integer.parseInt(numeral);
-            i = 12; // for iterating through the arabic numeral array
-            while(number > 0) // do until the division has no remainder
-            {
-                division = number/arabicNumerals[i];
-                number = number%arabicNumerals[i];
-                while(division > 0)
-                {
-                    finalRomanNumeral.append(romanNumerals[i]);
-                    division--;
-                }
-                i--;
-            }
-            return(numeral + " represented in the roman system: " + finalRomanNumeral);
+            return(numeral + " represented in the roman system: " + romanNumeralProcessor.ArabicToRoman(number));
         }
         else if(!Objects.equals(arabicValidation, "0")) // If it outputs 0, do nothing
         {

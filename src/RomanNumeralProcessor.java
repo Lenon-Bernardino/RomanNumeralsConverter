@@ -47,4 +47,23 @@ public class RomanNumeralProcessor
         }
         return running_total;
     }
+
+    public String ArabicToRoman(int number)
+    {
+        StringBuilder finalRomanNumeral = new StringBuilder(); // For building the final roman numeral
+        int i = 12; // for iterating through the arabic numeral array
+        int division = 0;
+        while(number > 0) // do until the division has no remainder
+        {
+            division = number/arabicNumerals[i];
+            number = number%arabicNumerals[i];
+            while(division > 0)
+            {
+                finalRomanNumeral.append(romanNumerals[i]);
+                division--;
+            }
+            i--;
+        }
+        return finalRomanNumeral.toString();
+    }
 }
