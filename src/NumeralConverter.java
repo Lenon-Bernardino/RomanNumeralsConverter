@@ -10,9 +10,7 @@ public class NumeralConverter
     RomanValidator romanValidator = new RomanValidator(); // Check the validity of roman numeral input
     public String convert(String numeral)
     {
-        int i;
         int number; // For input numeral converted to integer
-        int division = 0; // For dividing numbers in arabic to roman conversion algorithm
 
         String arabicValidation = arabicValidator.validate(numeral);
 
