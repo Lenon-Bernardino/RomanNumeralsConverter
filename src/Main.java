@@ -8,7 +8,7 @@ public class Main
         NumeralConverter converter = new NumeralConverter();
         while(true)
         {
-            System.out.print("\n============================================================\n");
+            System.out.print("\n============================================================");
             System.out.print("\nType exit then press enter to exit");
             System.out.print("\nType a roman numeral to convert it to arabic");
             System.out.print("\nType an arabic numeral to convert it to roman");

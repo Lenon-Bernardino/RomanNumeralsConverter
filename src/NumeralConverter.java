@@ -1,41 +1,26 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NumeralConverter
 {
-    String[] romanNumerals = new String[] {"I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M"};
-    int[] arabicNumerals = new int[] {1,4,5,9,10,40,50,90,100,400,500,900,1000};
-    RomanNumeralProcessor validator = new RomanNumeralProcessor();
+    String[] romanNumerals = new String[] {"I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M"}; // Roman numerals for later referencing
+    int[] arabicNumerals = new int[] {1,4,5,9,10,40,50,90,100,400,500,900,1000}; // Arabic equivalents of the roman numerals array
+    RomanNumeralProcessor RomanProcessor = new RomanNumeralProcessor();
     public String convert(String numeral)
     {
         int i;
-        int number;
-        int division = 0;
-        List<Integer> arabicEquivalents = new ArrayList<Integer>();
+        int number; // For input numeral converted to integer
+        int division = 0; // For dividing numbers in arabic to roman conversion algorithm
+
         StringBuilder finalRomanNumeral = new StringBuilder();
-        if (numeral.matches("[0-9]+")) // it's arabic
+        String arabicValidation = RomanProcessor.validateArabic(numeral);
+
+        if(Objects.equals(arabicValidation, "ok"))
         {
-            try
+            number = Integer.parseInt(numeral);
+            i = 12; // for iterating through the arabic numeral array
+            while(number > 0) // do until the division has no remainder
             {
-                number = Integer.parseInt(numeral);
-            }
-            catch(Exception e)
-            {
-                return "Invalid number, please try again.";
-            }
-            if(numeral.equals("0"))
-            {
-                return("The roman system did not need any value to represent zero. But instead of zero, the word nulla was used by the Romans to specify zero.");
-            }
-            if(number > 3999)
-            {
-                return("The roman system can only represent numbers up to 3999");
-            }
-            i = 12;
-            while(number > 0)
-            {
-                System.out.println("Number: " + number);
-                System.out.println("Division: " + division);
                 division = number/arabicNumerals[i];
                 number = number%arabicNumerals[i];
                 while(division > 0)
@@ -47,23 +32,18 @@ public class NumeralConverter
             }
             return(numeral + " represented in the roman system: " + finalRomanNumeral);
         }
-        if(validator.validate(numeral)) // If it's a valid roman numeral
+        else if(!Objects.equals(arabicValidation, "0"))
         {
-            arabicEquivalents = validator.getArabicEquivalents(numeral);
-            int running_total = 0;
-            for(int j = 0; j < arabicEquivalents.size(); j++)
-            {
-                if(j == arabicEquivalents.size()-1 || arabicEquivalents.get(j) >= arabicEquivalents.get(j + 1))
-                {
-                    running_total += arabicEquivalents.get(j);
-                }
-                else
-                {
-                    running_total += arabicEquivalents.get(j+1) - arabicEquivalents.get(j);
-                    j++;
-                }
-            }
-            return(numeral + " represented in the arabic system: " + running_total);
+            return arabicValidation;
+        }
+
+        List<Integer> arabicEquivalents; // List of the arabic equivalent of each roman symbol in the user input numeral
+
+        if(RomanProcessor.validateRoman(numeral)) // If it's a valid roman numeral
+        {
+            arabicEquivalents = RomanProcessor.getArabicEquivalents(numeral);
+            int result = RomanProcessor.ArabicListToRoman(arabicEquivalents);
+            return(numeral + " represented in the arabic system: " + result);
         }
         return("Invalid number, please try again.");
     }
